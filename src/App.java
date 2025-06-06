@@ -2,6 +2,8 @@ import controllers.Cola;
 import controllers.ColaG;
 import controllers.Stack;
 import controllers.StackG;
+import Ejercicio1.SigValidator;
+import Ejercicio2.StackSorter;
 import models.Persona;
 
 public class App {
@@ -9,49 +11,88 @@ public class App {
         Stack stack = new Stack();
         stack.push(10);
         stack.push(-1);
+        stack.push (0);
         stack.push(5);
-        stack.push(8);
-        System.out.println("Tam ="  + stack.size());
         stack.printStack();
         stack.pop();
         stack.peek();
-        System.out.println("Tam ="  + stack.size());
         stack.printStack();
 
-        // stack generica
-        StackG<String> stackGString = new StackG<String>();
-        stackGString.push("Uno");
-        stackGString.push("Cuatro");
-        stackGString.printStack();
+        //Stack Generica
+        System.out.println("\nStack Generica");
 
-        StackG<Integer> stackGInt = new StackG<Integer>();
-        stackGInt.push(1);
-        stackGInt.push(4);
-        stackGInt.printStack();
+        StackG<Integer> stackG = new StackG<Integer>();
+        stackG.push(1);
+        stackG.push(4);
+        stackG.printStack();
 
+        StackG<String> stackG1 = new StackG<String>();
+        stackG1.push("Uno");
+        stackG1.push("Cuatro");
+        stackG1.printStack();
+
+        
+        System.out.println("\nColas");
+
+        // Cola no generica
         Cola cola = new Cola();
         cola.add(5);
         cola.add(7);
         cola.add(10);
-        System.out.println("tam =" + cola.size);
+        System.out.println("Tam = " + cola.size);
         cola.printCola();
         cola.remove();
-        System.out.println("tam =" + cola.size);
+        System.out.println("Tam = " + cola.size);
         cola.printCola();
+
+        System.out.println("Peek: " + stack.peek());
+        // Cola generica
 
         Persona p1 = new Persona("Pablo");
         Persona p2 = new Persona("Juan");
         Persona p3 = new Persona("Maria");
-        ColaG<Persona> colaPersonas = new ColaG<Persona>();
 
+        System.out.println("\nCola Generica");
+
+        ColaG<Persona> colaPersonas = new ColaG<Persona>();
         colaPersonas.add(p1);
         colaPersonas.add(p2);
         colaPersonas.add(p3);
-
-        System.out.println(colaPersonas.size);
-        System.out.println();
-        System.out.println("Atiende a la persona => " + colaPersonas.remove());
-        System.out.println(colaPersonas.size);
+        System.out.println("Tam = " + colaPersonas.size());
         colaPersonas.printCola();
+        System.out.println("Atiende a : " + colaPersonas.remove().getNombre());
+        System.out.println("Tam = " + colaPersonas.size());
+        colaPersonas.printCola();
+        
+
+        System.out.println("Maria esta numero "+colaPersonas.findByName("Maria"));
+        System.out.println("Elimina");
+        colaPersonas.removeByName("David");
+        colaPersonas.printCola();
+
+        SigValidator validador = new SigValidator();
+        String[] pruebas = {"([]){}", "({)}", "()[]{}", "(([]))", "(([]))["};
+
+        System.out.println("Validación de signos:");
+        for (String prueba : pruebas) {
+            boolean resultado = validador.validar(prueba);
+            System.out.println(prueba + " → " + resultado);
+            validador.reiniciar(); 
+        }
+
+        // Ejercicio 2: Ordenar pila
+        StackSorter sorter = new StackSorter();
+        sorter.insertar(5);
+        sorter.insertar(1);
+        sorter.insertar(4);
+        sorter.insertar(2);
+
+        Stack resultadoOrdenado = sorter.ordenar();
+
+        System.out.println("\n  menor a mayor:");
+        resultadoOrdenado.printStack(); 
     }
+
+
+
 }
